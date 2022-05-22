@@ -24,15 +24,39 @@ namespace ariel{
                 Node(string &d) : data(d), parent(nullptr), next(nullptr){}
 
                 Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}
+
+                ~Node(){
+                    for(Node *n:kids){
+                        delete(n);
+                    }
+                }
             };
 
             Node* _root;
 
             //constructer
             OrgChart():_root(nullptr){}
+            // ~OrgChart(){
+            //     queue<Node*>helper;
+            //     stack<Node*>st;
+            //     helper.push(this->_root);
+            //     while(!helper.empty()){
+            //         st.push(helper.front());
+            //         getkids_q(st.top(), &helper); 
+            //         helper.pop();
+            //     }
+            //     while(!st.empty()){
+            //         delete(st.top());
+            //         st.pop();
+            //     }
+                
+            // }
             
             //create a "real root for the tree or change the string of the root
             OrgChart add_root(string s){
+                if( s.empty()){
+                     throw std::invalid_argument( "empty string" );    
+                }
                 if (this->_root==nullptr){
                     this->_root=new Node(s);
                 }
@@ -46,6 +70,9 @@ namespace ariel{
             // add a kid to one of the nodes in the tree
             // we will find the parent node and add the kid to its vector
             OrgChart add_sub(string s1,string s2){
+                if( s1.empty() || s2.empty()){
+                     throw std::invalid_argument( "empty string" );    
+                }
                 if (this->_root==nullptr){
                     throw std::invalid_argument( "the orgchart is empty" ); 
                 }
@@ -202,33 +229,57 @@ namespace ariel{
 
 
             Iterator begin_level_order(){
+                if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 set_next__level_order();
                 return Iterator(this->_root);
             }
 
             Iterator end_level_order(){
+                 if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 return Iterator(nullptr);
             }
 
             Iterator begin_reverse_order(){
+                if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 return Iterator(set_next__reverse_level_order());
             }
             Iterator reverse_order(){
+                 if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 return Iterator(nullptr); 
             }
 
             Iterator begin_preorder(){
+                if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 set_next__preorder();
                 return Iterator(this->_root);
             }
             Iterator end_preorder(){
+                 if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 return Iterator(nullptr);
             }
 
             Iterator begin(){
+                 if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 return begin_level_order();
             }
             Iterator end(){
+                 if(this->_root==nullptr){
+                    throw std::invalid_argument( "chart is empty!" );  
+                }
                 return end_level_order();
             }
         
