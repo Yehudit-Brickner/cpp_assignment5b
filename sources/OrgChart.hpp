@@ -20,9 +20,9 @@ namespace ariel{
         Node(string &d) : data(d), parent(nullptr), next(nullptr){}
         Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}
         ~Node(){
-            for(Node *n:kids){
-                delete(n);
-            }
+            // for( unsigned long i=0; i<kids.size();i++){
+            //     kids[i]=nullptr;
+            // }
         }
     };
 
@@ -32,20 +32,23 @@ namespace ariel{
 
             //constructer
             OrgChart():_root(nullptr){}
-            ~OrgChart(){}
-            
-            //     // queue<Node*>helper;
-            //     // stack<Node*>st;
-            //     // helper.push(this->_root);
-            //     // while(!helper.empty()){
-            //     //     st.push(helper.front());
-            //     //     getkids_q(st.top(), &helper); 
-            //     //     helper.pop();
-            //     // }
-            //     // while(!st.empty()){
-            //     //     delete(st.top());
-            //     //     st.pop();
-            //     // } 
+            ~OrgChart(){
+                // cout<<"destucting"<<endl;
+                // queue<Node*>helper;
+                // stack<Node*>st;
+                // helper.push(this->_root);
+                // while(!helper.empty()){
+                //     st.push(helper.front());
+                //     getkids_q(st.top(), &helper); 
+                //     helper.pop();
+                // }
+                // while(!st.empty()){
+                //    st.pop();
+                // } 
+                // for (auto it =this->begin_reverse_order(); it!=this->reverse_order(); it++){
+                //     delete(&it);
+                // }
+            }
             
             
             //create a "real root for the tree or change the string of the root

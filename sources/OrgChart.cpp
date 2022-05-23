@@ -12,16 +12,16 @@ using namespace std;
 using namespace ariel;
 
 OrgChart OrgChart::add_root(string s){
-    if( s.empty()){
+    if(s.empty()){
         throw std::invalid_argument( "empty string" );    
     }
     if (this->_root==nullptr){
         this->_root=new Node(s);
+        return *this; 
     }
-    else{
-        this->_root->data=s;
-    }
-    return *this;      
+    this->_root->data=s;
+    return *this;
+             
 }
 
 
