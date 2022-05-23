@@ -11,26 +11,23 @@
 using namespace std;
 
 namespace ariel{
-    
+    struct Node{
+        string data;
+        vector<Node *> kids;
+        Node* parent;
+        Node* next;
+
+        Node(string &d) : data(d), parent(nullptr), next(nullptr){}
+        Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}
+        ~Node(){
+            for(Node *n:kids){
+                delete(n);
+            }
+        }
+    };
 
     class OrgChart{
         public:
-
-            struct Node{
-                string data;
-                vector<Node *> kids;
-                Node* parent;
-                Node* next;
-
-                Node(string &d) : data(d), parent(nullptr), next(nullptr){}
-                Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}
-                ~Node(){
-                    for(Node *n:kids){
-                        delete(n);
-                    }
-                }
-            };
-            
             Node* _root;
 
             //constructer
@@ -169,31 +166,31 @@ namespace ariel{
             // }
 
 
-            Node* set_next__reverse_level_order()
-            {
-                queue<Node*>helper;
-                stack<Node*>st;
-                helper.push(this->_root);
-                while(!helper.empty()){
-                    st.push(helper.front());
-                    getkids_q(st.top(), &helper); 
-                    helper.pop();
-                }
-                Node * beginig_of_iter=st.top();
-                while(!st.empty()){
-                    helper.push(st.top());
-                    st.pop();
-                    if(!st.empty()){
-                        helper.front()->next=st.top();
-                        helper.pop();
-                    }
-                    else{
-                        helper.front()->next=nullptr;
-                        helper.pop();
-                    }
-                }
-                return beginig_of_iter;
-            }
+            Node* set_next__reverse_level_order();make clearenv
+            // {
+            //     queue<Node*>helper;
+            //     stack<Node*>st;
+            //     helper.push(this->_root);
+            //     while(!helper.empty()){
+            //         st.push(helper.front());
+            //         getkids_q(st.top(), &helper); 
+            //         helper.pop();
+            //     }
+            //     Node * beginig_of_iter=st.top();
+            //     while(!st.empty()){
+            //         helper.push(st.top());
+            //         st.pop();
+            //         if(!st.empty()){
+            //             helper.front()->next=st.top();
+            //             helper.pop();
+            //         }
+            //         else{
+            //             helper.front()->next=nullptr;
+            //             helper.pop();
+            //         }
+            //     }
+            //     return beginig_of_iter;
+            // }
 
             void set_next__preorder();
             // {

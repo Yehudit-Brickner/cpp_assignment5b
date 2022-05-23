@@ -86,30 +86,30 @@ void OrgChart:: set_next__level_order(){
 
 
 
-// Node* OrgChart::set_next__reverse_level_order(){
-//     queue<Node*>helper;
-//     stack<Node*>st;
-//     helper.push(this->_root);
-//     while(!helper.empty()){
-//         st.push(helper.front());
-//         getkids_q(st.top(), &helper); 
-//         helper.pop();
-//     }
-//     Node * beginig_of_iter=st.top();
-//     while(!st.empty()){
-//         helper.push(st.top());
-//         st.pop();
-//         if(!st.empty()){
-//             helper.front()->next=st.top();
-//             helper.pop();
-//         }
-//         else{
-//             helper.front()->next=nullptr;
-//             helper.pop();
-//         }
-//     }
-//     return beginig_of_iter; 
-// }
+Node* OrgChart::set_next__reverse_level_order(){
+    queue<Node*>helper;
+    stack<Node*>st;
+    helper.push(this->_root);
+    while(!helper.empty()){
+        st.push(helper.front());
+        getkids_q(st.top(), &helper); 
+        helper.pop();
+    }
+    Node * beginig_of_iter=st.top();
+    while(!st.empty()){
+        helper.push(st.top());
+        st.pop();
+        if(!st.empty()){
+            helper.front()->next=st.top();
+            helper.pop();
+        }
+        else{
+            helper.front()->next=nullptr;
+            helper.pop();
+        }
+    }
+    return beginig_of_iter; 
+}
 
 
 
