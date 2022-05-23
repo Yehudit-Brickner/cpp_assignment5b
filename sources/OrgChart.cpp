@@ -25,7 +25,7 @@ OrgChart OrgChart::add_root(string s){
 }
 
 
-OrgChart OrgChart::add_sub(string s1,string s2){
+OrgChart OrgChart::add_sub(string const & s1, string  s2){
     if( s1.empty() || s2.empty()){
             throw std::invalid_argument( "empty string" );    
     }
@@ -35,7 +35,7 @@ OrgChart OrgChart::add_sub(string s1,string s2){
     queue<Node*> q;
     queue<Node*>helper;
     helper.push(this->_root);
-    while(helper.size()!=0){
+    while(!helper.empty()){
         if (helper.front()->data==s1){
             helper.front()->kids.push_back(new Node (s2, helper.front()));
             return *this;
@@ -65,7 +65,7 @@ ostream& ariel::operator<<(ostream& output, const OrgChart& org){
 }
 
 
-void OrgChart:: set_next__level_order(){
+void OrgChart:: set_next__level_order() const{
     queue<Node*>q;
     queue<Node*>helper;
     helper.push(this->_root);
@@ -86,7 +86,7 @@ void OrgChart:: set_next__level_order(){
 
 
 
-Node* OrgChart::set_next__reverse_level_order(){
+Node* OrgChart::set_next__reverse_level_order() const{
     queue<Node*>helper;
     stack<Node*>st;
     helper.push(this->_root);
@@ -112,7 +112,7 @@ Node* OrgChart::set_next__reverse_level_order(){
 }
 
 
-void OrgChart::set_next__preorder(){
+void OrgChart::set_next__preorder() const{
     stack<Node*> helper;
     queue<Node*> q;
     helper.push(this->_root);
@@ -133,21 +133,27 @@ void OrgChart::set_next__preorder(){
 
 
 void OrgChart::getkids_q(Node* n, queue<Node*>* que){
-    for (int i =n->kids.size()-1; i>=0;i--){
-        que->push(n->kids[(size_t)i]);
-    } 
+    // for (int i =n->kids.size()-1; i>=0;i--){
+    //     que->push(n->kids[(size_t)i]);
+    // } 
+    for (unsigned long i=n->kids.size()+1;i>1;i--){
+        que->push(n->kids[i-2]);
+    }
 } 
 
 
 void OrgChart::getkids_st(Node* n, stack<Node*>* st){
-    for (int i =n->kids.size()-1; i>=0;i--){
-        st->push(n->kids[(size_t)i]);
-    } 
+    // for (int i =n->kids.size()-1; i>=0;i--){
+    //     st->push(n->kids[(size_t)i]);
+    // } 
+    for (unsigned long i=n->kids.size()+1;i>1;i--){
+        st->push(n->kids[i-2]);
+    }
 }
 
 
 
-OrgChart::Iterator OrgChart::begin_level_order(){
+OrgChart::Iterator OrgChart::begin_level_order()const{
     if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }
@@ -155,28 +161,28 @@ OrgChart::Iterator OrgChart::begin_level_order(){
     return Iterator(this->_root);
 }
 
-OrgChart::Iterator OrgChart::end_level_order(){
+OrgChart::Iterator OrgChart::end_level_order()const{
         if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }
     return Iterator(nullptr);
 }
 
-OrgChart::Iterator OrgChart::begin_reverse_order(){
+OrgChart::Iterator OrgChart::begin_reverse_order()const{
     if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }
     return Iterator(set_next__reverse_level_order());
 }
 
-OrgChart::Iterator OrgChart::reverse_order(){
+OrgChart::Iterator OrgChart::reverse_order()const{
         if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }
     return Iterator(nullptr); 
 }
 
-OrgChart::Iterator OrgChart::begin_preorder(){
+OrgChart::Iterator OrgChart::begin_preorder()const{
     if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }
@@ -184,21 +190,21 @@ OrgChart::Iterator OrgChart::begin_preorder(){
     return Iterator(this->_root);
 }
 
-OrgChart::Iterator OrgChart::end_preorder(){
+OrgChart::Iterator OrgChart::end_preorder()const{
         if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }
     return Iterator(nullptr);
 }
 
-OrgChart::Iterator OrgChart::begin(){
+OrgChart::Iterator OrgChart::begin()const{
         if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }
     return begin_level_order();
 }
 
-OrgChart::Iterator OrgChart::end(){
+OrgChart::Iterator OrgChart::end()const{
         if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
     }

@@ -52,23 +52,19 @@ namespace ariel{
             OrgChart add_root(string s);
           
 
-
             // add a kid to one of the nodes in the tree
             // we will find the parent node and add the kid to its vector
-            OrgChart add_sub(string s1,string s2);
+            OrgChart add_sub(string const & s1,string s2);
         
-           
 
             // gets the kid of a node from right to left
-            void getchildren(Node* n, queue<Node*>* que);
+           static void getchildren(Node* n, queue<Node*>* que);
   
-
 
             // print the tree in a nice way
             friend ostream& operator<<(ostream& output, const OrgChart& org);
   
             
-
             class Iterator{
                 private:
                 Node* pointer_to_current_node;
@@ -106,87 +102,32 @@ namespace ariel{
 
             } ;
 
-        void set_next__level_order();
+        void set_next__level_order() const;
                 
-
-        Node* set_next__reverse_level_order();
+        Node* set_next__reverse_level_order()const;
         
-
-        void set_next__preorder();
+        void set_next__preorder()const;
          
-         
-        void getkids_q(Node* n, queue<Node*>* que);
+        static void getkids_q(Node* n, queue<Node*>* que);
       
-
-        void getkids_st(Node* n, stack<Node*>* st);
+        static void getkids_st(Node* n, stack<Node*>* st);
        
 
 
-        Iterator begin_level_order();
-        // {
-        //     if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     set_next__level_order();
-        //     return Iterator(this->_root);
-        // }
+        Iterator begin_level_order()const;
+        Iterator end_level_order() const;
+    
+        Iterator begin_reverse_order()const ;
+        Iterator reverse_order() const;
 
-        Iterator end_level_order();
-        // {
-        //         if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     return Iterator(nullptr);
-        // }
-
-        Iterator begin_reverse_order();
-        // {
-        //     if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     return Iterator(set_next__reverse_level_order());
-        // }
-
-        Iterator reverse_order();
-        // {
-        //         if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     return Iterator(nullptr); 
-        // }
-
-        Iterator begin_preorder();
-        // {
-        //     if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     set_next__preorder();
-        //     return Iterator(this->_root);
-        // }
-
-        Iterator end_preorder();
-        // {
-        //         if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     return Iterator(nullptr);
-        // }
-
-        Iterator begin();
-        // {
-        //         if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     return begin_level_order();
-        // }
-
-        Iterator end();
-        // {
-        //         if(this->_root==nullptr){
-        //         throw std::invalid_argument( "chart is empty!" );  
-        //     }
-        //     return end_level_order();
-        // }
+        Iterator begin_preorder()const ;
+        Iterator end_preorder() const;
+        
+        
+        // works like a level order
+        Iterator begin()const ;
+        Iterator end() const;
+      
         
 
     };
