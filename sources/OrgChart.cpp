@@ -11,7 +11,7 @@
 using namespace std;
 using namespace ariel;
 
-OrgChart OrgChart::add_root(string s){
+OrgChart& OrgChart::add_root(string s){
     if(s.empty()){
         throw std::invalid_argument( "empty string" );    
     }
@@ -25,7 +25,7 @@ OrgChart OrgChart::add_root(string s){
 }
 
 
-OrgChart OrgChart::add_sub(string const & s1, string  s2){
+OrgChart& OrgChart::add_sub(string const & s1, string  s2){
     if( s1.empty() || s2.empty()){
             throw std::invalid_argument( "empty string" );    
     }

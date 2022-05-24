@@ -20,9 +20,9 @@ namespace ariel{
         Node(string &d) : data(d), parent(nullptr), next(nullptr){}
         Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}
         ~Node(){
-            // for( unsigned long i=0; i<kids.size();i++){
-            //     kids[i]=nullptr;
-            // }
+           for (unsigned long i=0; i<this->kids.size();i++){
+                delete(this->kids[i]);
+            }
         }
     };
 
@@ -34,6 +34,10 @@ namespace ariel{
             OrgChart():_root(nullptr){}
             ~OrgChart(){
                 // cout<<"destucting"<<endl;
+               delete(this->_root);
+                
+                
+                // vector<Node*> del;
                 // queue<Node*>helper;
                 // stack<Node*>st;
                 // helper.push(this->_root);
@@ -43,21 +47,44 @@ namespace ariel{
                 //     helper.pop();
                 // }
                 // while(!st.empty()){
-                //    st.pop();
-                // } 
-                // for (auto it =this->begin_reverse_order(); it!=this->reverse_order(); it++){
-                //     delete(&it);
+                //     del.push_back(st.top());
+                //     st.pop();
+                // }
+                // for (unsigned long i=0; i<del.size();i++){
+                //     delete(del[i]);
+                // }
+                
+                
+                
+                
+                // first try
+                // cout<<"destucting"<<endl;
+                // vector<Node*> del;
+                // queue<Node*>helper;
+                // stack<Node*>st;
+                // helper.push(this->_root);
+                // while(!helper.empty()){
+                //     st.push(helper.front());
+                //     getkids_q(st.top(), &helper); 
+                //     helper.pop();
+                // }
+                // while(!st.empty()){
+                //     del.push_back(st.top());
+                //     st.pop();
+                // }
+                // for (unsigned long i=0; i<del.size();i++){
+                //     delete(del[i]);
                 // }
             }
             
             
             //create a "real root for the tree or change the string of the root
-            OrgChart add_root(string s);
+            OrgChart& add_root(string s);
           
 
             // add a kid to one of the nodes in the tree
             // we will find the parent node and add the kid to its vector
-            OrgChart add_sub(string const & s1,string s2);
+            OrgChart& add_sub(string const & s1,string s2);
         
 
             // gets the kid of a node from right to left
