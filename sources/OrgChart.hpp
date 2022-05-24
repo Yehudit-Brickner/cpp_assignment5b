@@ -19,6 +19,24 @@ namespace ariel{
 
         Node(string &d) : data(d), parent(nullptr), next(nullptr){}
         Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}
+        
+        // Node(const Node&n){
+        //     this->data=n.data;
+        //     this->parent=n.parent;
+        //     this->next=n.next;
+        //     for (unsigned long i=0;i<n.kids.size(); i++){
+        //         this->kids.push_back(n.kids[i]);
+        //     }
+        // }
+       
+
+
+        Node &operator=(Node const &other) = default;
+        Node &operator=(Node &&other) = default;
+        Node(Node&) = default;
+        Node(Node&&) = default;
+        
+
         ~Node(){
            for (unsigned long i=0; i<this->kids.size();i++){
                 delete(this->kids[i]);
@@ -35,8 +53,33 @@ namespace ariel{
             ~OrgChart(){
                 delete(this->_root); 
             }
+
+            // OrgChart(const OrgChart&o ){
+            //     this->_root=o._root;
+            //     queue<Node*>q;
+            //     queue<Node*>helper;
+            //     helper.push(o._root);
+            //     while(!helper.empty()){
+            //         q.push(helper.front());
+            //         OrgChart::getchildren(helper.front(), &helper); 
+            //         helper.pop();
+            //     }
+            //     // take the root out of the q
+            //     q.pop();
+            //     // go through rest of the q and add kids to parents
+            //     while(!q.empty()){
+            //         this->add_sub(q.front()->parent->data,q.front()->data);
+            //         q.pop();
+            //     }
+            // }
             
             
+
+            OrgChart &operator=(OrgChart const &other) = default;
+            OrgChart &operator=(OrgChart &&other) = default;
+            OrgChart(OrgChart&) = default;
+            OrgChart(OrgChart&&) = default;
+
             //create a "real root for the tree or change the string of the root
             OrgChart& add_root(string s);
           
