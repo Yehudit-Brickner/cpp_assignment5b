@@ -57,10 +57,52 @@ void OrgChart::getchildren(Node* n, queue<Node*>* que){
 
 
 ostream& ariel::operator<<(ostream& output, const OrgChart& org){
-    cout<< "printing OrgChart"<<endl; 
-    string s1="------------------";
-    string s2="---------";
-    string s3="|";
+    // making a queue of the nides in level order
+      cout<< "printing OrgChart"<<endl; 
+    
+    queue<Node*>q;
+    queue<Node*>helper;
+    helper.push(org._root);
+    while(!helper.empty()){
+        q.push(helper.front());
+        OrgChart::getchildren(helper.front(), &helper); 
+        helper.pop();
+    }
+    // going threw the nodes
+    // checking what ayer it is in 
+    // printing  at the beging if the layer what the layer is 
+    // then printing each node - their parent and kids
+    int level =0;
+    output<<"level "<< level<< "\n";
+    while (!q.empty()){
+        if(q.front()->parent!=nullptr){
+            int count=0;
+            Node *kid=q.front();
+            while(kid->parent!=nullptr){
+                kid=kid->parent;
+                count++;
+            }
+            if (count!=level){
+                level=count;
+                output<< "level "<< level <<"\n";
+            }
+        }
+        if(q.front()->parent!=nullptr)  {
+            output <<"node: "<< q.front()->data <<"," << "   parent: " << q.front()->parent->data<< ",";
+        }
+        else{
+            output <<"node: "<< q.front()->data <<",";
+        }
+        if(!q.front()->kids.empty()){
+            output << " kids:   "; 
+            for (unsigned long i=0; i<q.front()->kids.size(); i++){
+                output<<q.front()->kids[i]->data<< ",  ";
+            }
+        }
+        output<<"\n";
+        q.pop();
+        }
+  
     return output;
 }
 
