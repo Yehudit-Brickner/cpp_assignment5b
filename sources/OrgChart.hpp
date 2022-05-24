@@ -33,48 +33,7 @@ namespace ariel{
             //constructer
             OrgChart():_root(nullptr){}
             ~OrgChart(){
-                // cout<<"destucting"<<endl;
-               delete(this->_root);
-                
-                
-                // vector<Node*> del;
-                // queue<Node*>helper;
-                // stack<Node*>st;
-                // helper.push(this->_root);
-                // while(!helper.empty()){
-                //     st.push(helper.front());
-                //     getkids_q(st.top(), &helper); 
-                //     helper.pop();
-                // }
-                // while(!st.empty()){
-                //     del.push_back(st.top());
-                //     st.pop();
-                // }
-                // for (unsigned long i=0; i<del.size();i++){
-                //     delete(del[i]);
-                // }
-                
-                
-                
-                
-                // first try
-                // cout<<"destucting"<<endl;
-                // vector<Node*> del;
-                // queue<Node*>helper;
-                // stack<Node*>st;
-                // helper.push(this->_root);
-                // while(!helper.empty()){
-                //     st.push(helper.front());
-                //     getkids_q(st.top(), &helper); 
-                //     helper.pop();
-                // }
-                // while(!st.empty()){
-                //     del.push_back(st.top());
-                //     st.pop();
-                // }
-                // for (unsigned long i=0; i<del.size();i++){
-                //     delete(del[i]);
-                // }
+                delete(this->_root); 
             }
             
             
