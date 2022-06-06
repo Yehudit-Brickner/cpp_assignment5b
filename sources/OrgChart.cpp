@@ -11,27 +11,49 @@
 using namespace std;
 using namespace ariel;
 
+// create/update the root of the OrgChart
 OrgChart& OrgChart::add_root(string s){
+    // if the string is empty or contains illegal char we will throw an exception
+    const int onetwosix=126;
+    const int threetwo=32;
     if(s.empty()){
         throw std::invalid_argument( "empty string" );    
     }
+    for (unsigned long i=0; i<s.length();i++){
+        if(s[i]< threetwo || s[i]>onetwosix){
+            throw std::invalid_argument( "string contains illegal char" );  
+        }
+    }
+    // if the root is a nullptr we will create a new node with the string     
     if (this->_root==nullptr){
         this->_root=new Node(s);
         return *this; 
     }
+    // if the root isnt a null poiner we will change the string of the node
     this->_root->data=s;
     return *this;
              
 }
 
-
+// add a leaf to the OrgChart
 OrgChart& OrgChart::add_sub(string const & s1, string  s2){
+    // if the either string is empty or the orgchart root is a nullptr or s2 contains illegal char we will throw an exception
+    const int onetwosix=126;
+    const int threetwo=32;
     if( s1.empty() || s2.empty()){
             throw std::invalid_argument( "empty string" );    
     }
     if (this->_root==nullptr){
         throw std::invalid_argument( "the orgchart is empty" ); 
     }
+    
+    for (unsigned long i=0; i<s2.length();i++){
+        if(s2[i]< threetwo || s2[i]>onetwosix){
+            throw std::invalid_argument( "string contains illegal char" );  
+        }
+    } 
+    // we will look for the parent node
+    // once we found it we will add to the parnets vector a pointer to a the kids new node 
     queue<Node*> q;
     queue<Node*>helper;
     helper.push(this->_root);
@@ -44,20 +66,13 @@ OrgChart& OrgChart::add_sub(string const & s1, string  s2){
         getchildren(helper.front(), &helper); 
         helper.pop();
     }
-    // throw error parent no in orgchart 
+    // if we went through the whole OrgChrart and didint find the parent we will throw an error
     throw std::invalid_argument( "parent is not in the orgchart" );   
 }
 
-
-void OrgChart::getchildren(Node* n, queue<Node*>* que){
-    for (unsigned long i =0; i< n->kids.size();i++){
-        que->push(n->kids[i]);
-    } 
-}
-
-
+// print the OrgChart 
 ostream& ariel::operator<<(ostream& output, const OrgChart& org){
-    // making a queue of the nides in level order
+    // making a queue of the nodes in level order
       cout<< "printing OrgChart"<<endl; 
     
     queue<Node*>q;
@@ -69,7 +84,7 @@ ostream& ariel::operator<<(ostream& output, const OrgChart& org){
         helper.pop();
     }
     // going threw the nodes
-    // checking what ayer it is in 
+    // checking what layer it is in 
     // printing  at the beging if the layer what the layer is 
     // then printing each node - their parent and kids
     int level =0;
@@ -106,8 +121,9 @@ ostream& ariel::operator<<(ostream& output, const OrgChart& org){
     return output;
 }
 
-
+// sets the next of all the nodes for level order using BFS
 void OrgChart:: set_next__level_order() const{
+    // usng 2 queues we will create a queue of the whole OrgChart using BFS
     queue<Node*>q;
     queue<Node*>helper;
     helper.push(this->_root);
@@ -115,10 +131,12 @@ void OrgChart:: set_next__level_order() const{
         q.push(helper.front());
         getchildren(helper.front(), &helper); 
         helper.pop();
+        // setting the next for each node
         if(!helper.empty()){
             q.front()->next = helper.front();
             q.pop();                   
         }
+        // the last nodes next is nullptr
         else{
             q.front()->next=nullptr;
             q.pop();  
@@ -126,9 +144,11 @@ void OrgChart:: set_next__level_order() const{
     }
 }
 
-
-
+// sets the next of all the nodes for reverse level order using BFS
 Node* OrgChart::set_next__reverse_level_order() const{
+    // using a stack and a queue we will create a stack of the whole OrgChart using BFS 
+    // form the right most kids to the left most kids
+    
     queue<Node*>helper;
     stack<Node*>st;
     helper.push(this->_root);
@@ -137,7 +157,9 @@ Node* OrgChart::set_next__reverse_level_order() const{
         getkids_q(st.top(), &helper); 
         helper.pop();
     }
+    // the top of the stack is the beging of the iterator 
     Node * beginig_of_iter=st.top();
+    // we will set the next for all the nodes
     while(!st.empty()){
         helper.push(st.top());
         st.pop();
@@ -145,6 +167,7 @@ Node* OrgChart::set_next__reverse_level_order() const{
             helper.front()->next=st.top();
             helper.pop();
         }
+        // the last nodes next is nullptr
         else{
             helper.front()->next=nullptr;
             helper.pop();
@@ -153,8 +176,11 @@ Node* OrgChart::set_next__reverse_level_order() const{
     return beginig_of_iter; 
 }
 
-
+// sets the next of all the nodes for preorder using DFS
 void OrgChart::set_next__preorder() const{
+    // using a queue and a stack we will create a queue of the whole OrgChart using DFS
+    // form the right most kids to the left most kids
+
     stack<Node*> helper;
     queue<Node*> q;
     helper.push(this->_root);
@@ -162,10 +188,12 @@ void OrgChart::set_next__preorder() const{
         q.push(helper.top());
         helper.pop();
         getkids_st(q.front(), &helper);
+        // setting the next for each node
         if(!helper.empty()){
             q.front()->next = helper.top();
             q.pop();                   
         }
+        // the last nodes next is nullptr
         else{
             q.front()->next = nullptr;
             q.pop();
@@ -173,28 +201,29 @@ void OrgChart::set_next__preorder() const{
     }    
 }
 
+// add the kids of a node to the queue from the left most kid to the right most kid
+void OrgChart::getchildren(Node* n, queue<Node*>* que){
+    for (unsigned long i =0; i< n->kids.size();i++){
+        que->push(n->kids[i]);
+    } 
+}
 
+// add the kids of a node to the queue from the right most kid to the left most kid
 void OrgChart::getkids_q(Node* n, queue<Node*>* que){
-    // for (int i =n->kids.size()-1; i>=0;i--){
-    //     que->push(n->kids[(size_t)i]);
-    // } 
     for (unsigned long i=n->kids.size()+1;i>1;i--){
         que->push(n->kids[i-2]);
     }
 } 
 
-
+// add the kids of a node to the stack from the right most kid to the left most kid
 void OrgChart::getkids_st(Node* n, stack<Node*>* st){
-    // for (int i =n->kids.size()-1; i>=0;i--){
-    //     st->push(n->kids[(size_t)i]);
-    // } 
     for (unsigned long i=n->kids.size()+1;i>1;i--){
         st->push(n->kids[i-2]);
     }
 }
 
 
-
+// set all of the next by calling the correct set function and return the pointer to the beging and end node of the iterators.
 OrgChart::Iterator OrgChart::begin_level_order()const{
     if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  

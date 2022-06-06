@@ -18,17 +18,7 @@ namespace ariel{
         Node* next;
 
         Node(string &d) : data(d), parent(nullptr), next(nullptr){}
-        Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}
-        
-        // Node(const Node&n){
-        //     this->data=n.data;
-        //     this->parent=n.parent;
-        //     this->next=n.next;
-        //     for (unsigned long i=0;i<n.kids.size(); i++){
-        //         this->kids.push_back(n.kids[i]);
-        //     }
-        // }
-       
+        Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}   
 
 
         Node &operator=(Node const &other) = default;
@@ -54,27 +44,8 @@ namespace ariel{
                 delete(this->_root); 
             }
 
-            // OrgChart(const OrgChart&o ){
-            //     this->_root=o._root;
-            //     queue<Node*>q;
-            //     queue<Node*>helper;
-            //     helper.push(o._root);
-            //     while(!helper.empty()){
-            //         q.push(helper.front());
-            //         OrgChart::getchildren(helper.front(), &helper); 
-            //         helper.pop();
-            //     }
-            //     // take the root out of the q
-            //     q.pop();
-            //     // go through rest of the q and add kids to parents
-            //     while(!q.empty()){
-            //         this->add_sub(q.front()->parent->data,q.front()->data);
-            //         q.pop();
-            //     }
-            // }
-            
-            
-
+           
+            // function needed for a smart pointer???
             OrgChart &operator=(OrgChart const &other) = default;
             OrgChart &operator=(OrgChart &&other) = default;
             OrgChart(OrgChart&) = default;
@@ -89,9 +60,6 @@ namespace ariel{
             OrgChart& add_sub(string const & s1,string s2);
         
 
-            // gets the kid of a node from right to left
-           static void getchildren(Node* n, queue<Node*>* que);
-  
 
             // print the tree in a nice way
             friend ostream& operator<<(ostream& output, const OrgChart& org);
@@ -139,13 +107,18 @@ namespace ariel{
         Node* set_next__reverse_level_order()const;
         
         void set_next__preorder()const;
-         
+
+        // gets the kid of a node from right to left
+        static void getchildren(Node* n, queue<Node*>* que);
+
+        // get the kids of a node from left to right 
         static void getkids_q(Node* n, queue<Node*>* que);
-      
+
+        // get kids of a node from left to right
         static void getkids_st(Node* n, stack<Node*>* st);
        
 
-
+        // get the begining and end of the iterator
         Iterator begin_level_order()const;
         Iterator end_level_order() const;
     
