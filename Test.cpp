@@ -10,7 +10,7 @@
 using namespace std;
 using namespace ariel;
 
-TEST_CASE("test1"){
+TEST_CASE("regular"){
 
     OrgChart num;
     CHECK_NOTHROW(num.add_root("numbers"));
@@ -30,8 +30,7 @@ TEST_CASE("test1"){
     CHECK_NOTHROW(num.add_sub("even_np", "8"));
     CHECK_NOTHROW(num.add_sub("odd_np", "9"));
     CHECK_NOTHROW(num.add_sub("even_np", "10"));
-    CHECK_THROWS(num.add_sub("even_np","\n12"));
-    CHECK_THROWS(num.add_sub("even_np","\r14"));
+  
 
 
     string levelord="";
@@ -62,7 +61,7 @@ TEST_CASE("test1"){
     cout << num << endl;
 
 
-    CHECK_THROWS(num.add_root("positive \n numbers"));
+   
     CHECK_NOTHROW(num.add_root("positive_numbers"));
 
 
@@ -92,5 +91,32 @@ TEST_CASE("test1"){
     CHECK(preorder1==preorder);
 
     cout << num << endl;
+
+}
+TEST_CASE("bad names"){
+    OrgChart bad;
+    CHECK_THROWS(bad.add_root("hi\n"));
+    CHECK_THROWS(bad.add_sub("hi","hello"));
+    CHECK_NOTHROW(bad.add_root("hi"));
+    CHECK_NOTHROW(bad.add_sub("hi","hello"));
+    CHECK_THROWS(bad.add_sub("hi", "hello\n"));
+    CHECK_THROWS(bad.add_sub("hi", "hello\r"));
+    CHECK_THROWS(bad.add_sub("hi", "\thello"));
+    CHECK_THROWS(bad.add_sub("hi", "   "));
+    CHECK_NOTHROW(bad.add_sub("hi", "$%#@"));
+    CHECK_THROWS(bad.add_root("    "));
+    cout<<bad<<endl;
+}
+
+TEST_CASE("bad its"){
+    OrgChart bad;
+    CHECK_THROWS(bad.begin());
+    CHECK_THROWS(bad.end());
+    CHECK_THROWS(bad.begin_level_order());
+    CHECK_THROWS(bad.end_level_order());
+    CHECK_THROWS(bad.begin_preorder());
+    CHECK_THROWS(bad.end_preorder());
+    CHECK_THROWS(bad.begin_reverse_order());
+    CHECK_THROWS(bad.reverse_order());
 }
 

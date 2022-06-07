@@ -20,11 +20,11 @@ namespace ariel{
         Node(string &d) : data(d), parent(nullptr), next(nullptr){}
         Node (string &d, Node * n) : data(d), parent(n), next(nullptr){}   
 
-
-        Node &operator=(Node const &other) = default;
-        Node &operator=(Node &&other) = default;
-        Node(Node&) = default;
-        Node(Node&&) = default;
+        // using the compiler generated version of the function- these function were added so that make tidy would work
+        Node &operator=(Node const &other) = default; // similar to copy constructer
+        Node &operator=(Node &&other) = default; // the other gets the value of this, this becomes null
+        Node(Node&) = default; // similar to a constructer
+        Node(Node&&) = default; // similar to a constructer
         
 
         ~Node(){
@@ -45,11 +45,11 @@ namespace ariel{
             }
 
            
-            // function needed for a smart pointer???
-            OrgChart &operator=(OrgChart const &other) = default;
-            OrgChart &operator=(OrgChart &&other) = default;
-            OrgChart(OrgChart&) = default;
-            OrgChart(OrgChart&&) = default;
+            // using the compiler generated version of the function- these function were added so that make tidy would work
+            OrgChart &operator=(OrgChart const &other) = default; // similar to copy constructer
+            OrgChart &operator=(OrgChart &&other) = default; // the other gets the value of this, this becomes null
+            OrgChart(OrgChart&) = default; // similar to a constructer
+            OrgChart(OrgChart&&) = default; // similar to a constructer
 
             //create a "real root for the tree or change the string of the root
             OrgChart& add_root(string s);
@@ -74,29 +74,35 @@ namespace ariel{
                     pointer_to_current_node=n;   
                 }
                 string operator*(){
+                    // return the string data of the node
                     return pointer_to_current_node->data; 
                 } 
 
                 string* operator->(){
+                    // returns the address of the data of the node
                     return &(pointer_to_current_node->data);
                 }
 
                 Iterator& operator++(){
+                    // moves the iterator to the next node 
                     pointer_to_current_node=pointer_to_current_node->next;
                     return *this;
                 }
 
                 Iterator operator++(int){
+                    // moves the iterator to the next node return a pointer to the node it was at
                     Iterator iterator= *this;
                     ++(*this);
                     return iterator; 
                 }
 
                 bool operator==(const Iterator& other) const{
+                    // comapares 2 pointers
                     return pointer_to_current_node == other.pointer_to_current_node;
                 }
 
                 bool operator!=(const Iterator& other) const{
+                    // comapares 2 pointers
                     return !(*this==other);
                 }
 

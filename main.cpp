@@ -70,13 +70,20 @@ int main(){
 	}
 
     try{
-        num.add_sub("even_np","12");
+        num.add_sub("even_np","12\n");
     }
      catch (exception& ex) {
 	 	cout << "   caught exception: " << ex.what() << endl;  
 	}
 
-    cout<<"print pre_order\n"<<endl;
+    try{
+        num.add_sub("even_nps","12");
+    }
+     catch (exception& ex) {
+	 	cout << "   caught exception: " << ex.what() << endl;  
+	}
+
+    cout<<"\nprint pre_order\n"<<endl;
     for(auto it = num.begin_preorder(); it != num.end_preorder(); ++it){
         cout<< *it<<endl;
     }
@@ -85,7 +92,7 @@ int main(){
     for(auto it = num.begin_reverse_order(); it != num.reverse_order(); ++it){
         cout<< *it<<endl;
     }
-    cout<<" printing positive numbers OrgChart"<<endl;
+    cout<<"printing positive numbers OrgChart"<<endl;
     cout<<num<<endl;
     return 0;
 }

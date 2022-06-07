@@ -19,10 +19,17 @@ OrgChart& OrgChart::add_root(string s){
     if(s.empty()){
         throw std::invalid_argument( "empty string" );    
     }
+    bool onlyspace=true;
     for (unsigned long i=0; i<s.length();i++){
         if(s[i]< threetwo || s[i]>onetwosix){
             throw std::invalid_argument( "string contains illegal char" );  
         }
+        if(s[i]!=threetwo){
+            onlyspace=false;
+        }
+    }
+    if (onlyspace){
+         throw std::invalid_argument( "string contains only spaces" );
     }
     // if the root is a nullptr we will create a new node with the string     
     if (this->_root==nullptr){
@@ -46,11 +53,17 @@ OrgChart& OrgChart::add_sub(string const & s1, string  s2){
     if (this->_root==nullptr){
         throw std::invalid_argument( "the orgchart is empty" ); 
     }
-    
+    bool onlyspace=true;
     for (unsigned long i=0; i<s2.length();i++){
         if(s2[i]< threetwo || s2[i]>onetwosix){
             throw std::invalid_argument( "string contains illegal char" );  
         }
+        if(s2[i]!=threetwo){
+            onlyspace=false;
+        }
+    }
+    if (onlyspace){
+         throw std::invalid_argument( "string contains only spaces" );
     } 
     // we will look for the parent node
     // once we found it we will add to the parnets vector a pointer to a the kids new node 
@@ -223,7 +236,7 @@ void OrgChart::getkids_st(Node* n, stack<Node*>* st){
 }
 
 
-// set all of the next by calling the correct set function and return the pointer to the beging and end node of the iterators.
+// set all of the next by calling the correct set function and return the pointer to the beginning and end node of the iterators.
 OrgChart::Iterator OrgChart::begin_level_order()const{
     if(this->_root==nullptr){
         throw std::invalid_argument( "chart is empty!" );  
